@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Agendamento de Visita — Solarium</title>
+<style>
+  :root{--bg:#041927;--card:#072632;--accent:#ffd166}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg),#022f2b);font-family:Inter,system-ui,Roboto,Arial;color:#e7fbf4;display:flex;align-items:center;justify-content:center;padding:20px}
+
+  .container{padding:18px;width:100%;max-width:520px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));padding:22px;border-radius:14px;box-shadow:0 14px 40px rgba(2,6,23,0.6);width:100%}
+
+  h2{margin:0 0 10px 0}
+  .small{font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:16px}
+  label{display:block;font-size:13px;margin:12px 0 6px 0;color:rgba(255,255,255,0.8)}
+  input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#e7fbf4;font-size:15px;outline:none;cursor:pointer}
+
+  .btn{width:100%;padding:14px;border-radius:10px;border:0;cursor:pointer;font-weight:700;background:linear-gradient(90deg,var(--accent),#ffb559);color:#05222b;font-size:16px;margin-top:18px}
+
+  /* Tela de parabéns */
+  .verifiedScreen{
+    position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;display:none;
+    text-align:center;padding:20px;
+  }
+
+  .checkBlue{
+     font-size:20px;color:white;background:#1d9bf0;width:90px;height:90px;border-radius:50%;
+     display:grid;place-items:center;margin-bottom:20px;opacity:0;transform:scale(0.2)
+  }
+
+  @keyframes popIn{
+    0%{opacity:0;transform:scale(0.2)}
+    60%{opacity:1;transform:scale(1.2)}
+    100%{opacity:1;transform:scale(1)}
+  }
+
+  .animateCheck{
+     animation: popIn 0.6s cubic-bezier(0.3, 1.4, 0.6, 1) forwards;
+  }
+</style>
+</head>
+
+<body>
+  <main class="container">
+    <div class="card">
+      <h2>Agendar visita técnica</h2>
+      <div class="small">Escolha a data desejada para a visita do técnico ao local</div>
+      
+      <label>Escolha a data da visita</label>
+      <input type="date" id="dataVisita"/>
+      
+      <button class="btn" id="realizarAgendamento">Realizar Agendamento</button>
+    </div>
+  </main>
+
+  <!-- Tela final -->
+  <section class="verifiedScreen" id="verifiedScreen">
+     <div class="checkBlue" id="check">✔</div>
+     <div style="font-size:22px;font-weight:800;margin-bottom:6px">Agendamento realizado com sucesso!</div>
+     <div style="font-size:16px;opacity:.8">Parabéns 🎉 Nossa equipe entrará em contato.</div>
+  </section>
+
+<script>
+  const overlay = document.getElementById('verifiedScreen');
+
+  document.getElementById('realizarAgendamento').addEventListener('click',()=>{
+     const data = document.getElementById('dataVisita').value;
+     if(!data){
+       alert("Escolha uma data!");
+       return;
+     }
+
+     // mostra tela final
+     document.getElementById('verifiedScreen').style.display="flex";
+
+     // anima check azul
+     document.getElementById('check').classList.add('animateCheck');
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dimensionar Painel — Solarium</title>
+<style>
+  :root{--bg:#061f22;--card:#072632;--accent:#ffd166}
+  body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg),#0a3a36);font-family:Inter,system-ui,Arial;color:#e9fbf6;padding:18px}
+  .top{display:flex;align-items:center;gap:12px}
+  .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(90deg,#ffd166,#ff9b2b);display:grid;place-items:center}
+  main{max-width:900px;margin:18px auto}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));padding:16px;border-radius:12px}
+  label{display:block;margin-top:10px;font-size:13px;color:rgba(255,255,255,0.85)}
+  input, select{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:inherit}
+  .section-title{margin-top:20px;font-size:15px;font-weight:800;color:var(--accent)}
+  .actions{display:flex;gap:8px;margin-top:14px}
+  .btn{padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+  .btn.back{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#e9fbf6}
+  .btn.compute{background:linear-gradient(90deg,var(--accent),#ffb559);color:#05222b}
+  .btn.verify{width:100%;margin-top:22px;background:linear-gradient(90deg,#06d6a0,#0a8f7c);color:#05222b;font-size:15px}
+  .result{margin-top:14px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.02)}
+  @media(max-width:700px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+
+<body>
+  <div class="top">
+    <div class="logo">☀️</div>
+    <div>
+      <div style="font-size:14px">Solarium</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6)">Dimensionamento</div>
+    </div>
+  </div>
+
+  <main>
+    <div class="card">
+      <h2 style="margin:0 0 8px 0">Dados para dimensionamento</h2>
+      <p style="margin:0 0 12px 0;color:rgba(255,255,255,0.75)">Preencha as informações para avaliarmos sua instalação solar.</p>
+
+      <!-- CONSUMO -->
+      <div class="section-title">Consumo e Conta de Energia</div>
+
+      <label>Consumo médio mensal (kWh)</label>
+      <input id="consumo" type="number" placeholder="Ex: 320" />
+
+      <label>Valor médio da conta mensal (R$)</label>
+      <input id="contaValor" type="number" placeholder="Ex: 250" />
+
+      <label>Distribuidora de energia</label>
+      <select id="distribuidora">
+        <option>Selecione</option>
+        <option>Enel</option>
+        <option>Neoenergia</option>
+        <option>CPFL</option>
+        <option>Light</option>
+        <option>Equatorial</option>
+        <option>Energisa</option>
+        <option>AES Brasil</option>
+        <option>Outra</option>
+      </select>
+
+      <label>Sua ligação é:</label>
+      <select id="ligacaoTipo">
+        <option>Monofásica</option>
+        <option>Bifásica</option>
+        <option>Trifásica</option>
+      </select>
+
+      <!-- LOCAL + TELHADO -->
+      <div class="section-title">Estrutura do Local</div>
+
+      <label>Tipo de telhado</label>
+      <select id="telhadoTipo">
+        <option>Fibrocimento</option>
+        <option>Cerâmica</option>
+        <option>Metálico / Zinco</option>
+        <option>Laje (telhado plano)</option>
+        <option>Shingle / Asfáltico</option>
+        <option>Outro</option>
+      </select>
+
+      <label>Condição do telhado</label>
+      <select>
+        <option>Excelente</option>
+        <option>Boa</option>
+        <option>Precisa de reparos</option>
+        <option>Precisa ser trocado em breve</option>
+      </select>
+
+      <label>Inclinação aproximada do telhado</label>
+      <select id="inclinacao">
+        <option>Plano (0° a 5°)</option>
+        <option>Baixa (6° a 15°)</option>
+        <option>Média (16° a 30°)</option>
+        <option>Alta (31° a 45°)</option>
+      </select>
+
+      <label>Orientação do telhado onde pretende instalar</label>
+      <select id="orientacao">
+        <option>Norte</option>
+        <option>Leste</option>
+        <option>Oeste</option>
+        <option>Sul</option>
+      </select>
+
+      <!-- SOMBREAMENTO -->
+      <div class="section-title">Sombreamento e Exposição Solar</div>
+
+      <label>Há sombreamento no local da instalação?</label>
+      <select id="sombra">
+        <option>Não, exposição total ao sol</option>
+        <option>Pouco (árvores ou muros distantes)</option>
+        <option>Moderado em parte do dia</option>
+        <option>Muito sombreamento</option>
+      </select>
+
+      <label>Possui árvores próximas que podem crescer e gerar sombra?</label>
+      <select>
+        <option>Não</option>
+        <option>Sim, mas posso podar</option>
+        <option>Sim, não posso alterar</option>
+      </select>
+
+      <!-- OBJETIVO -->
+      <div class="section-title">Objetivo do Sistema</div>
+
+      <label>Qual o motivo da instalação?</label>
+      <select>
+        <option>Economia na conta</option>
+        <option>Investimento / Valorização do imóvel</option>
+        <option>Sustentabilidade</option>
+        <option>Backup de energia</option>
+        <option>Tudo acima</option>
+      </select>
+
+      <!-- INSTALAÇÃO -->
+      <div class="section-title">Informações Técnicas</div>
+
+      <label>Possui espaço livre mínimo de 15m² no telhado?</label>
+      <select>
+        <option>Sim</option>
+        <option>Não tenho certeza</option>
+        <option>Não</option>
+      </select>
+
+      <label>Já possui energia solar?</label>
+      <select>
+        <option>Não</option>
+        <option>Sim, quero expandir</option>
+        <option>Sim, quero substituir</option>
+      </select>
+
+      <label>Distância estimada do telhado até o padrão de energia</label>
+      <select>
+        <option>Até 5 metros</option>
+        <option>6 a 15 metros</option>
+        <option>16 a 30 metros</option>
+        <option>Mais de 30 metros</option>
+      </select>
+
+      <!-- FINANCIAMENTO -->
+      <div class="section-title">Forma de Aquisição</div>
+
+      <label>Como pretende pagar?</label>
+      <select>
+        <option>À vista</option>
+        <option>Financiamento bancário</option>
+        <option>Cartão de crédito</option>
+        <option>Consórcio</option>
+        <option>Não sei ainda</option>
+      </select>
+
+      <!-- CALCULAR -->
+      <div class="actions">
+        <button class="btn back" onclick="location.href='painelprincipal.html'">Voltar</button>
+        <button class="btn compute" onclick="compute()">Calcular sugestão</button>
+      </div>
+
+      <div class="result" id="resultArea">
+        Preencha os campos e clique em <strong>Calcular sugestão</strong>.
+      </div>
+
+      <!-- BOTÃO FINAL -->
+      <button class="btn verify" onclick="verificarDisponibilidade()">Verificar se tenho disponibilidade</button>
+    </div>
+  </main>
+
+<script>
+  function verificarDisponibilidade() {
+    alert("Checando disponibilidade na sua região...\n\nVocê será redirecionado para o agendamento!");
+    setTimeout(() => {
+      window.location.href = "agendamento.html";
+    }, 1200);
+  }
+
+  function compute(){
+    const consumo = parseFloat(document.getElementById('consumo').value);
+    const irrad = 5.0;
+    const effPerc = 0.75;
+    const panelWp = 400;
+
+    if (!consumo || consumo <= 0) {
+      alert('Informe um consumo mensal válido.');
+      return;
+    }
+
+    const kwhPerkWpMonth = irrad * 30 * 0.75;
+    const adjusted = kwhPerkWpMonth * effPerc / 0.75;
+    const kwpNeeded = consumo / adjusted;
+    const kwpRounded = Math.max(0.1, Math.round(kwpNeeded * 100) / 100);
+    const modules = Math.ceil((kwpRounded * 1000) / panelWp);
+    const areaPerWp = 1/200;
+    const estimatedArea = ((modules * panelWp) * areaPerWp).toFixed(1);
+
+    document.getElementById('resultArea').innerHTML = `
+      <div style="font-size:16px;font-weight:800">${kwpRounded} kWp necessários</div>
+      <div style="margin-top:8px">Módulos sugeridos: <strong>${modules} x ${panelWp} Wp</strong></div>
+      <div>Área aproximada: <strong>${estimatedArea} m²</strong></div>
+      <div style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.7)">
+        Essa é uma sugestão inicial. A análise final será feita pela equipe técnica após o agendamento.
+      </div>
+    `;
+  }
+</script>
+</body>
+</html>
